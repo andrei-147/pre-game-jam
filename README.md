@@ -15,4 +15,5 @@ This is a prototype engine/graphics test. It implements a custom **Normalized De
 | **Left / Right Arrows** | Rotate the object |
 | **Space** | Toggle **Wireframe Mode** |
 | **R** | Reset position and rotation |
+| **LShift** | Slow down movement by half |
 | **Escape** | Close the application |
