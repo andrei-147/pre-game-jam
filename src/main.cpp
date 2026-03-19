@@ -69,6 +69,7 @@ int main() {
 
     float theta = 0;
     sf::Vector2f offset = {0.0f, 0.0f};
+    float multi = 1.0f;
 
     while (win.isOpen()) {
         while (const auto &event = win.pollEvent()) {
@@ -85,10 +86,11 @@ int main() {
                 }
             }
         }
-        theta += (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) - sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) * sf::priv::pi * 2 * DT;
+        multi = 1.0f - (0.5 * sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift));
+        theta += (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) - sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) * sf::priv::pi * 2 * DT * multi;
         offset += {
-            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) - sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) * 5.0f * DT,
-            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) - sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) * 5.0f * DT
+            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) - sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) * 5.0f * DT * multi,
+            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) - sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) * 5.0f * DT * multi
         };
         win.clear(sf::Color{30, 30, 30, 255});
         const size_t SIZE = wireframe ? WIREFRAMES : VERTICES;
