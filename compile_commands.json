@@ -1,7 +1,7 @@
 [
   {
     "directory": "/home/andrei/projects/devel/cpp/physics",
-    "command": "g++ g++ /home/andrei/projects/devel/cpp/physics/src/main.cpp -I/home/andrei/projects/devel/cpp/physics/include -L/home/andrei/projects/devel/cpp/physics/lib -Wl,-rpath,/home/andrei/projects/devel/cpp/physics/lib -o window -g -Wall -Wextra -fsanitize=address -O0 -std=c++20 -lsfml-graphics -lsfml-system -lsfml-window",
+    "command": "g++ g++ /home/andrei/projects/devel/cpp/physics/src/main.cpp -I/home/andrei/projects/devel/cpp/physics/include -L/home/andrei/projects/devel/cpp/physics/lib -Wl,-rpath,/home/andrei/projects/devel/cpp/physics/lib -o window -g -Wall -Wextra -fsanitize=address -O0 -std=c++23 -lSDL3",
     "file": "/home/andrei/projects/devel/cpp/physics/src/main.cpp"
   }
 ]

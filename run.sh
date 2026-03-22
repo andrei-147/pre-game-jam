@@ -1,1 +1,1 @@
-cbuild -Bdebug -XSFML -Sc++20 -Lsfml-window -Lsfml-system -Lsfml-graphics -Owindow && ./window
+cbuild -Bdebug -XSDL3 -Sc++23 -LSDL3 -Owindow && ./window
