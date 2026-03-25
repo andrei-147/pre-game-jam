@@ -3,7 +3,7 @@
 #include "collision_object.hpp"
 namespace core {
 
-class PhysicsObject : CollisionObject {
+class PhysicsObject : public CollisionObject {
 
 protected:
     SDL_FPoint velocity = {0.0f, 0.0f};

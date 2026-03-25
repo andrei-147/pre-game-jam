@@ -4,7 +4,7 @@
 
 namespace core {
 
-class TransformObject : Object {
+class TransformObject : public Object {
 
 protected:
     SDL_FPoint offset = {0.0f, 0.0f};
@@ -34,6 +34,11 @@ public:
     /// \brief Gets the scaling of the object
     /// \return An SDL_FPoint representing the scaling on the x and y axis of the object
     [[nodiscard]] SDL_FPoint getScaling() const;
+
+    /// \brief The transform function that applies the translation, rotation and scaling of this object onto a given vertex
+    /// \param p The coordinates of the vertex to apply the transform on
+    /// \return The transformed coordinates of the vertex
+    [[nodiscard]] SDL_FPoint transform(SDL_FPoint p);
 };
 
 }

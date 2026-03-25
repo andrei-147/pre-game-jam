@@ -6,7 +6,7 @@ namespace core {
 class Texture {
 
 private:
-    SDL_Texture *texture = nullptr;
+    SDL_Texture *texture = NULL;
 
 public:
     /// \brief The Texture constructor for an image texture
@@ -18,7 +18,9 @@ public:
     /// \param size The size to display the font
     Texture(const char *font_name, const size_t size);
 
-    [[nodiscard]] SDL_Texture *get();
+    [[nodiscard]] SDL_Texture *get() const;
+
+    ~Texture();
 };
 
 }

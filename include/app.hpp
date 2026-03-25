@@ -2,6 +2,7 @@
 #include "layer.hpp"
 #include "renderer.hpp"
 #include <concepts>
+#include <memory>
 #include <vector>
 
 namespace core {
@@ -18,9 +19,9 @@ private:
     Renderer renderer; // the renderer wrapper used to render all objects
     bool running; // the flag that tracks whether the application is running or not
     float dt = 1.0f / 60.0f; // the time in milliseconds it took the last frame to update and render
-    std::vector<Layer> layers;
+    std::vector<std::unique_ptr<Layer>> layers;
 
-    void handleKeyboardInput(SDL_Event &event, SDL_EventType type);
+    void handleKeyboardInput(SDL_Event &event);
 
     void cleanup();
 
@@ -30,9 +31,11 @@ public:
     /// \param config Specifies the configuration used to start the app
     Application(ApplicationConfiguration config);
 
-    template<typename AppLayer>
-    requires std::derived_from<AppLayer, Layer>
-    void addLayer();
+    template <typename AppLayer>
+    requires std::derived_from<AppLayer, core::Layer>
+    void addLayer() {
+        layers.push_back(std::make_unique<AppLayer>());
+    }
 
     /// Creates a window and a renderer when called
     /// \brief Run method should be called only once after setup is done

@@ -5,6 +5,11 @@ namespace core {
 
 namespace constants {
 
+inline constexpr float PI = 3.14159265359;
+
+inline SDL_FPoint screen_dimensions = {1.0f, 1.0f};
+inline SDL_FPoint inverse_dimensions = {1.0f, 1.0f};
+
 inline consteval size_t indices(const size_t size) {
     return (size - 2) * 3;
 }

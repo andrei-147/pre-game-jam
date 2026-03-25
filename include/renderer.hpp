@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL3/SDL.h>
+#include "object.hpp"
 
 namespace core {
 
@@ -11,7 +12,7 @@ private:
 
 public:
     /// \brief Creates the renderer but does not initialize it
-    Renderer();
+    Renderer() = default;
 
     /// \brief Initializes the renderer
     /// \param window A window that has already been created
@@ -26,7 +27,10 @@ public:
     bool isInitialized() const;
 
     /// \brief The render method that renders an object
-    void render();
+    /// \param object The object to be rendered
+    void render(Object &object);
+
+    [[nodiscard]] SDL_Renderer *get() const;
 
     /// \brief Safely destroys current renderer
     void destroy();

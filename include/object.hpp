@@ -11,6 +11,7 @@ public:
     const size_t vertex_count;
     const int *indices;
     const size_t index_count;
+    const SDL_FColor color;
     const Texture *texture;
 
     Object() = delete;
@@ -21,9 +22,9 @@ public:
     /// \param indices A pointer to the first element of an array holding all indices of the object
     /// \param index_count The number of indices in the array
     /// \param texture The texture of the object
-    Object(const SDL_FPoint *vertices, const size_t vertex_count, const int *indices, const size_t index_count, const Texture *texture);
+    Object(const SDL_FPoint *vertices, const size_t vertex_count, const int *indices, const size_t index_count, const SDL_FColor color, const Texture &texture);
 
-    ~Object() = default;
+    virtual ~Object() = default;
 };
 
 }

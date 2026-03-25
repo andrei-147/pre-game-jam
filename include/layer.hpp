@@ -9,7 +9,7 @@ protected:
 
 public:
     /// \brief constructs the layer
-    Layer();
+    Layer() = default;
 
     /// \brief Initializes the renderer used by the layer
     /// \param renderer The renderer used by the layer
@@ -22,7 +22,7 @@ public:
     /// \brief Renders the layer for the current tick
     virtual void render() {}
 
-    virtual ~Layer() = 0;
+    virtual ~Layer() = default;
 };
 
 }

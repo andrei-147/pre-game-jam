@@ -1,16 +1,14 @@
 #include "app.hpp"
-#include <utility>
+#include "constants.hpp"
 
 core::Application::Application(core::ApplicationConfiguration config) : cfg(config) {
+    constants::screen_dimensions.x = cfg.dimensions.x;
+    constants::screen_dimensions.y = cfg.dimensions.y;
+    constants::inverse_dimensions.x = 1.0f / cfg.dimensions.x;
+    constants::inverse_dimensions.y = 1.0f / cfg.dimensions.y;
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 }
 
-template <typename AppLayer>
-requires std::derived_from<AppLayer, core::Layer>
-void core::Application::addLayer() {
-    AppLayer l{};
-    layers.push_back(std::move(l));
-}
 
 bool core::Application::isRunning() const { return running; }
 
@@ -20,7 +18,8 @@ void core::Application::run() {
     renderer.init(window);
     if (!renderer.isInitialized()) return;
     for (auto &l : layers)
-        l.setRenderer(renderer);
+        l.get()->setRenderer(renderer);
+    running = true;
     SDL_Event event;
     uint64_t ns_start = 0;
     while (running) {
@@ -28,15 +27,33 @@ void core::Application::run() {
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_EVENT_QUIT: stop(); break;
-                case SDL_EVENT_KEY_DOWN: handleKeyboardInput(event, SDL_EVENT_KEY_DOWN); break;
-                case SDL_EVENT_KEY_UP: handleKeyboardInput(event, SDL_EVENT_KEY_UP); break;
+                case SDL_EVENT_KEY_DOWN: handleKeyboardInput(event); break;
+                case SDL_EVENT_KEY_UP: handleKeyboardInput(event); break;
             };
         }
+        SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255);
+        SDL_RenderClear(renderer.get());
+
         for (auto &l : layers)
-            l.update(dt);
+            l.get()->update(dt);
         for (auto &l : layers)
-            l.render();
+            l.get()->render();
         dt = (SDL_GetTicksNS() - ns_start) / 1000.0f;
+        SDL_RenderPresent(renderer.get());
+    }
+}
+
+void core::Application::handleKeyboardInput(SDL_Event &event) {
+    switch (event.type) {
+        case SDL_EVENT_KEY_DOWN: {
+            switch (event.key.scancode) {
+                case SDL_SCANCODE_ESCAPE: stop();
+                default: break;
+            }
+        } break;
+        case SDL_EVENT_KEY_UP: {
+        } break;
+        default: break;
     }
 }
 
