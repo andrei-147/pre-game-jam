@@ -15,6 +15,10 @@ public:
     /// \param renderer The renderer used by the layer
     void setRenderer(Renderer &renderer);
 
+    /// \brief Method that handles an event
+    /// \param event An SDL_Event passed by the app
+    virtual void onEvent(SDL_Event &event) {}
+
     /// \brief Updates the entire layer state for the current tick
     /// \param dt The time in milliseconds it took for the last tick to update and render
     virtual void update(float dt) {}

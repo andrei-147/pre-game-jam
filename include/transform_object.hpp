@@ -8,7 +8,7 @@ class TransformObject : public Object {
 
 protected:
     SDL_FPoint offset = {0.0f, 0.0f};
-    SDL_FPoint scaling = {0.0f, 0.0f};
+    SDL_FPoint scaling = {1.0f, 1.0f};
     float theta = 0.0f;
 
 public:

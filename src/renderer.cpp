@@ -28,7 +28,7 @@ void core::Renderer::render(core::Object &object) {
     std::vector<SDL_Vertex> vertices {object.vertex_count};
     for (size_t i = 0; i < object.vertex_count; ++i) {
         auto &current_v = object.vertices[i];
-        vertices.emplace_back((is_transformable ? d->transform(current_v) : current_v), object.color, current_v);
+        vertices[i] = {(is_transformable ? d->transform(current_v) : current_v), object.color, current_v};
         std::println("rendering point at {}, {}", vertices.at(i).position.x, vertices.at(i).position.y);
     }
     SDL_RenderGeometry(renderer, object.texture->get(), vertices.data(), vertices.size(), object.indices, object.index_count);

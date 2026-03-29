@@ -6,11 +6,16 @@ core::Application::Application(core::ApplicationConfiguration config) : cfg(conf
     constants::screen_dimensions.y = cfg.dimensions.y;
     constants::inverse_dimensions.x = 1.0f / cfg.dimensions.x;
     constants::inverse_dimensions.y = 1.0f / cfg.dimensions.y;
+    constants::aspect_ratio = constants::screen_dimensions.y * constants::inverse_dimensions.x;
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 }
 
 
 bool core::Application::isRunning() const { return running; }
+
+bool core::Application::isKeyPressed(const SDL_Scancode scancode) {
+    return SDL_GetKeyboardState(NULL)[scancode];
+}
 
 void core::Application::run() {
     window = SDL_CreateWindow(cfg.name, cfg.dimensions.x, cfg.dimensions.y, 0);
@@ -30,6 +35,9 @@ void core::Application::run() {
                 case SDL_EVENT_KEY_DOWN: handleKeyboardInput(event); break;
                 case SDL_EVENT_KEY_UP: handleKeyboardInput(event); break;
             };
+            for (auto &ptr : layers) {
+                ptr.get()->onEvent(event);
+            }
         }
         SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255);
         SDL_RenderClear(renderer.get());
@@ -38,7 +46,7 @@ void core::Application::run() {
             l.get()->update(dt);
         for (auto &l : layers)
             l.get()->render();
-        dt = (SDL_GetTicksNS() - ns_start) / 1000.0f;
+        dt = (SDL_GetTicksNS() - ns_start) / 1000000.0f;
         SDL_RenderPresent(renderer.get());
     }
 }

@@ -1,4 +1,5 @@
 #include "transform_object.hpp"
+#include "constants.hpp"
 #include "utils.hpp"
 
 
@@ -12,5 +13,5 @@ void core::TransformObject::setScaling(SDL_FPoint scaling) {this->scaling = scal
 [[nodiscard]] SDL_FPoint core::TransformObject::getScaling() const { return scaling; }
 
 [[nodiscard]] SDL_FPoint core::TransformObject::transform(SDL_FPoint p) {
-    return utils::translate(utils::rotate(utils::scale(p, scaling), theta), offset);
+    return utils::screen(utils::translate(utils::aspect(utils::rotate(utils::scale(p, scaling), theta), constants::aspect_ratio), offset));
 }

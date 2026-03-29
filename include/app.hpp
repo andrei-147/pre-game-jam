@@ -31,11 +31,17 @@ public:
     /// \param config Specifies the configuration used to start the app
     Application(ApplicationConfiguration config);
 
+    /// \brief Adds specified layer to render queue
     template <typename AppLayer>
     requires std::derived_from<AppLayer, core::Layer>
     void addLayer() {
         layers.push_back(std::make_unique<AppLayer>());
     }
+
+    /// \brief Get a boolean that describes the pressed state of given scancode
+    /// \param The SDL_SCANCODE of a certain key
+    /// \return True if key is pressed, false if otherwise
+    bool isKeyPressed(const SDL_Scancode scancode);
 
     /// Creates a window and a renderer when called
     /// \brief Run method should be called only once after setup is done
