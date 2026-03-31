@@ -1,5 +1,7 @@
 #include "app.hpp"
 #include "constants.hpp"
+#include <print>
+#include <algorithm>
 
 core::Application::Application(core::ApplicationConfiguration config) : cfg(config) {
     constants::screen_dimensions.x = cfg.dimensions.x;
@@ -7,6 +9,7 @@ core::Application::Application(core::ApplicationConfiguration config) : cfg(conf
     constants::inverse_dimensions.x = 1.0f / cfg.dimensions.x;
     constants::inverse_dimensions.y = 1.0f / cfg.dimensions.y;
     constants::aspect_ratio = constants::screen_dimensions.y * constants::inverse_dimensions.x;
+    constants::target_frame_time = 1.0f / cfg.fps;
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 }
 
@@ -26,9 +29,9 @@ void core::Application::run() {
         l.get()->setRenderer(renderer);
     running = true;
     SDL_Event event;
-    uint64_t ns_start = 0;
+    uint64_t start = 0;
     while (running) {
-        ns_start = SDL_GetTicksNS();
+        start = SDL_GetPerformanceCounter();
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_EVENT_QUIT: stop(); break;
@@ -46,8 +49,14 @@ void core::Application::run() {
             l.get()->update(dt);
         for (auto &l : layers)
             l.get()->render();
-        dt = (SDL_GetTicksNS() - ns_start) / 1000000.0f;
         SDL_RenderPresent(renderer.get());
+        dt = (SDL_GetPerformanceCounter() - start) / (float)SDL_GetPerformanceFrequency();
+	if (dt < core::constants::target_frame_time) {
+		SDL_Delay(std::max(0.0, (core::constants::target_frame_time - dt) * 1000.0f - 2.0f));
+		do {
+        		dt = (SDL_GetPerformanceCounter() - start) / (float)SDL_GetPerformanceFrequency();
+		} while (dt < core::constants::target_frame_time);
+	}
     }
 }
 

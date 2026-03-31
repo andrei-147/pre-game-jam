@@ -21,7 +21,7 @@ public:
 
     /// \brief Updates the entire layer state for the current tick
     /// \param dt The time in milliseconds it took for the last tick to update and render
-    virtual void update(float dt) {}
+    virtual void update(double dt) {}
 
     /// \brief Renders the layer for the current tick
     virtual void render() {}

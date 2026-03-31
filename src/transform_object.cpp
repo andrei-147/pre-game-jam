@@ -12,6 +12,6 @@ void core::TransformObject::setRotation(float theta) { this->theta = theta; }
 void core::TransformObject::setScaling(SDL_FPoint scaling) {this->scaling = scaling; }
 [[nodiscard]] SDL_FPoint core::TransformObject::getScaling() const { return scaling; }
 
-[[nodiscard]] SDL_FPoint core::TransformObject::transform(SDL_FPoint p) {
+[[nodiscard]] SDL_FPoint core::TransformObject::transform(SDL_FPoint p) const {
     return utils::screen(utils::translate(utils::aspect(utils::rotate(utils::scale(p, scaling), theta), constants::aspect_ratio), offset));
 }

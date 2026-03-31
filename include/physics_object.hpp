@@ -10,6 +10,7 @@ protected:
     SDL_FPoint acceleration = {0.0f, 0.0f};
 
 public:
+    using CollisionObject::CollisionObject;
 
     /// \brief Sets the velocity of the object
     /// \param velocity The velocity on the x and y axis to set for the object

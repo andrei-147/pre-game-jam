@@ -24,12 +24,12 @@ void core::Renderer::destroy() {
 void core::Renderer::render(core::Object &object) {
     auto *d = dynamic_cast<TransformObject*>(&object);
     bool is_transformable = nullptr != d;
-    std::println("Rendered object is {}", (is_transformable ? "TransformObject" : "Object"));
+    //std::println("Rendered object is {}", (is_transformable ? "TransformObject" : "Object"));
     std::vector<SDL_Vertex> vertices {object.vertex_count};
     for (size_t i = 0; i < object.vertex_count; ++i) {
         auto &current_v = object.vertices[i];
         vertices[i] = {(is_transformable ? d->transform(current_v) : current_v), object.color, current_v};
-        std::println("rendering point at {}, {}", vertices.at(i).position.x, vertices.at(i).position.y);
+        //std::println("rendering point at {}, {}", vertices.at(i).position.x, vertices.at(i).position.y);
     }
     SDL_RenderGeometry(renderer, object.texture->get(), vertices.data(), vertices.size(), object.indices, object.index_count);
 }

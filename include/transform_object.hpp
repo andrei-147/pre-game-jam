@@ -38,7 +38,7 @@ public:
     /// \brief The transform function that applies the translation, rotation and scaling of this object onto a given vertex
     /// \param p The coordinates of the vertex to apply the transform on
     /// \return The transformed coordinates of the vertex
-    [[nodiscard]] SDL_FPoint transform(SDL_FPoint p);
+    [[nodiscard]] SDL_FPoint transform(SDL_FPoint p) const;
 };
 
 }

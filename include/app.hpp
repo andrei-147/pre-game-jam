@@ -10,6 +10,7 @@ namespace core {
 struct ApplicationConfiguration {
     const char *name;
     SDL_Point dimensions;
+    float fps;
 };
 
 class Application {
@@ -18,7 +19,7 @@ private:
     SDL_Window *window = nullptr; // the pointer to the main window
     Renderer renderer; // the renderer wrapper used to render all objects
     bool running; // the flag that tracks whether the application is running or not
-    float dt = 1.0f / 60.0f; // the time in milliseconds it took the last frame to update and render
+    double dt = 1.0 / 60.0; // the time in seconds it took the last frame to update and render
     std::vector<std::unique_ptr<Layer>> layers;
 
     void handleKeyboardInput(SDL_Event &event);
